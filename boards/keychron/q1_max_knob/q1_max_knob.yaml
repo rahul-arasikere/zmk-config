@@ -1,0 +1,17 @@
+# This file was generated from a template. Edit it to match your keyboard.
+# See https://docs.zephyrproject.org/4.1.0/develop/test/twister.html#board-configuration
+# for more information.
+
+identifier: q1_max_knob
+name: Keychron Q1 Max Wireless
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - usb_device
+#   - adc
+#   - ble
+#   - pwm
+#   - watchdog

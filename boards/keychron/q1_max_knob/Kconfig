@@ -1,0 +1,18 @@
+# This file was generated from a template. Edit it to match your keyboard.
+# See https://docs.zephyrproject.org/4.1.0/hardware/porting/board_porting.html#write-kconfig-files
+# for more information.
+
+if BOARD_Q1_MAX_KNOB
+
+# Define any board-specific Kconfig options here.
+# If there are none, you may delete this file.
+config USB_DEVICE_VID
+    default 0x3434
+
+config USB_DEVICE_PID
+    default 0x0810
+
+config USB_DEVICE_MANUFACTURER
+    default "Keychron"
+
+endif # BOARD_Q1_MAX_KNOB

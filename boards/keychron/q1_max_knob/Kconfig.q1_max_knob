@@ -1,0 +1,11 @@
+# This file was generated from a template. Edit it to match your keyboard.
+# See https://docs.zephyrproject.org/4.1.0/hardware/porting/board_porting.html#write-kconfig-files
+# for more information.
+
+config BOARD_Q1_MAX_KNOB
+    select SOC_STM32F401XC
+    imply ZMK_STUDIO
+    imply ZMK_BOARD_COMPAT
+    imply RETAINED_MEM
+    imply RETENTION
+    imply RETENTION_BOOT_MODE

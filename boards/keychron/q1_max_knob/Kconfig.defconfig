@@ -5,12 +5,19 @@
 if BOARD_Q1_MAX_KNOB
 
 config ZMK_KEYBOARD_NAME
-    default "q1_max_knob"
+    default "Keychron Q1 Max"
 
 if USB
 
 config USB_DEVICE_STACK
     default y
+
+config USB_DEVICE_VID
+    default 0x3434
+config USB_DEVICE_PID
+    default 0x0810
+config USB_DEVICE_MANUFACTURER
+    default "Keychron"
 
 endif # USB
 

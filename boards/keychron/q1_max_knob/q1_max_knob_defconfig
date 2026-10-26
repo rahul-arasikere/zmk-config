@@ -8,6 +8,38 @@ CONFIG_GPIO=y
 # Use pinctrl
 CONFIG_PINCTRL=y
 
+# Enable reset by default
+CONFIG_RESET=y
+
+# Enable clock control by default
+CONFIG_CLOCK_CONTROL=y
+
 # Enable ZMK outputs
 # CONFIG_ZMK_BLE=y
 CONFIG_ZMK_USB=y
+
+# Bootloader Support
+CONFIG_RETAINED_MEM=y
+CONFIG_RETENTION=y
+CONFIG_RETENTION_BOOT_MODE=y
+
+# Settings Support
+CONFIG_MPU_ALLOW_FLASH_WRITE=y
+CONFIG_NVS=y
+CONFIG_SETTINGS_NVS=y
+CONFIG_FLASH=y
+CONFIG_FLASH_PAGE_LAYOUT=y
+CONFIG_FLASH_MAP=y
+
+# Enable MPU
+CONFIG_ARM_MPU=y
+
+# Enable HW stack protection
+CONFIG_HW_STACK_PROTECTION=y
+
+# Enable GPIO
+CONFIG_GPIO=y
+
+# Defaults for matrix scanning to avoid interrupt issues
+CONFIG_ZMK_KSCAN_MATRIX_POLLING=y
+

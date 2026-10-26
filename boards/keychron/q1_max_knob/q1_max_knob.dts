@@ -66,7 +66,6 @@
                     <&gpioc 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpioc 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpioc 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
-                    <&gpioc 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpioa 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpioa 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
@@ -93,10 +92,10 @@
                RC(5, 0) RC(5, 1) RC(5, 2)                            RC(5, 6)                   RC(5, 9) RC(5, 10) RC(5, 11) RC(5, 12) RC(5, 13) RC(5, 14)>;
     };
 
-        sram@2000FFFF {
+    sram@2000FFFF {
         compatible = "zephyr,memory-region", "mmio-sram";
         reg = <0x2000FFFF 0x1>;
-        zephyr,memory-region = "RETAINED";
+        zephyr,memory-region = "RetainedMem";
         status = "okay";
 
         retainedmem {
@@ -147,27 +146,32 @@
     status = "okay";
 };
 
-&usbotg_fs {
-    pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
-    pinctrl-names = "default";
-    status="okay";
+zephyr_udc0: &usbotg_fs {
+	pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
+	pinctrl-names = "default";
+	status = "okay";
 };
 
 &flash0 {
     partitions {
-		#address-cells = <1>;
-		#size-cells = <1>;
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
 
         code_partition: partition@0 {
             compatible = "zephyr,mapped-partition";
             label = "image";
-            reg = <0x00000000 DT_SIZE_K(256)>;
+            reg = <0x00000000 DT_SIZE_K(192)>;
+        };
+
+        storage_partition: partition@30000 {
+            reg = <0x00030000 DT_SIZE_K(64)>;
         };
     };
 };
 
 &sram0 {
     /* Shrink SRAM by one byte for DFU support */
-    reg = <0x20000000 0xffff>;
+    reg = <0x20000000 (DT_SIZE_K(64)-0x1)>;
 
 };

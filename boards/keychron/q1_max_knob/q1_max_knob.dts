@@ -6,6 +6,7 @@
 /dts-v1/;
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <behaviors.dtsi>
 
 #include <st/f4/stm32f401Xc.dtsi>
 #include <st/f4/stm32f401r(b-c)tx-pinctrl.dtsi>
@@ -38,6 +39,23 @@
         compatible = "zmk,keymap-sensors";
         sensors = <&encoder>;
         triggers-per-rotation = <5>;
+    };
+
+    layer_toggle: layer_toggle {
+        compatible = "zmk,kscan-gpio-direct";
+        input-gpios = <&gpiob 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        toggle-mode;
+    };
+
+    kscan_sideband_behaviours: kscan_sideband_behaviours {
+        compatible = "zmk,kscan-sideband-behaviors";
+        auto-enable;
+        kscan = <&layer_toggle>;
+
+        layer_toggle_sideband: layer_toggle_sideband {
+            column = <0>;
+            bindings = <&tog 2>;
+        };
     };
 
     kscan: kscan {
@@ -92,9 +110,9 @@
                RC(5, 0) RC(5, 1) RC(5, 2)                            RC(5, 6)                   RC(5, 9) RC(5, 10) RC(5, 11) RC(5, 12) RC(5, 13) RC(5, 14)>;
     };
 
-    sram@2000FFFF {
+    sram@2000ffff {
         compatible = "zephyr,memory-region", "mmio-sram";
-        reg = <0x2000FFFF 0x1>;
+        reg = <0x2000ffff 0x1>;
         zephyr,memory-region = "RetainedMem";
         status = "okay";
 
@@ -114,29 +132,29 @@
 };
 
 &clk_lsi {
-	status = "okay";
+    status = "okay";
 };
 
 &clk_hse {
-	clock-frequency = <DT_FREQ_M(16)>;
-	status = "okay";
+    clock-frequency = <DT_FREQ_M(16)>;
+    status = "okay";
 };
 
 &pll {
     div-m = <8>;
-	mul-n = <96>;
-	div-p = <4>;
-	div-q = <4>;
-	clocks = <&clk_hse>;
+    mul-n = <96>;
+    div-p = <4>;
+    div-q = <4>;
+    clocks = <&clk_hse>;
     status = "okay";
 };
 
 &rcc {
     clocks = <&pll>;
-	clock-frequency = <DT_FREQ_M(48)>;
-	ahb-prescaler = <1>;
-	apb1-prescaler = <2>;
-	apb2-prescaler = <1>;
+    clock-frequency = <DT_FREQ_M(48)>;
+    ahb-prescaler = <1>;
+    apb1-prescaler = <2>;
+    apb2-prescaler = <1>;
     status = "okay";
 };
 
@@ -147,9 +165,9 @@
 };
 
 zephyr_udc0: &usbotg_fs {
-	pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
-	pinctrl-names = "default";
-	status = "okay";
+    pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
+    pinctrl-names = "default";
+    status = "okay";
 };
 
 &flash0 {
@@ -172,6 +190,5 @@ zephyr_udc0: &usbotg_fs {
 
 &sram0 {
     /* Shrink SRAM by one byte for DFU support */
-    reg = <0x20000000 (DT_SIZE_K(64)-0x1)>;
-
+    reg = <0x20000000 (DT_SIZE_K(64) - 0x1)>;
 };
